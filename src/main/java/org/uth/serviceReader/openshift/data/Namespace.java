@@ -3,6 +3,7 @@ package org.uth.serviceReader.openshift.data;
 import java.util.*;
 
 import org.json.*;
+import org.uth.serviceReader.utils.JSONFailsafe;
 
 public class Namespace
 {
@@ -56,27 +57,22 @@ public class Namespace
    */
   public static Namespace extractNamespace( JSONObject input )
   {
-    if( !input.getString("kind").equals("Namespace") )
-    {
-      return null;
-    }
-    else
-    {
-      JSONObject status = input.getJSONObject( "status" );
-      JSONObject metadata = input.getJSONObject( "metadata" );
+    JSONObject status = input.getJSONObject( "status" );
+    JSONObject metadata = input.getJSONObject( "metadata" );
 
-      String statusPhase = status.getString( "phase" );
-      String name = metadata.getString( "name" );
-      String selfLink = metadata.getString( "selfLink" );
-      String creationTimestamp = metadata.getString( "creationTimestamp" );
+    String statusPhase = status.getString( "phase" );
+    String name = metadata.getString( "name" );
+    String selfLink = metadata.getString( "selfLink" );
+    String creationTimestamp = metadata.getString( "creationTimestamp" );
 
-      JSONObject annotations = metadata.getJSONObject( "annotations" );
-      String owner = annotations.getString( "openshift.io/requester" );
-      String description = annotations.getString( "openshift.io/description" );
-      String displayName = annotations.getString( "openshift.io/display-name" );
+    JSONObject annotations = metadata.getJSONObject( "annotations" );
 
-      return new Namespace( name, selfLink, creationTimestamp, owner, displayName, description, statusPhase );
-    }
+    // Failsafe checks for possibly optional field
+    String owner = JSONFailsafe.getString(annotations, "openshift.io/requester");
+    String description = JSONFailsafe.getString(annotations, "openshift.io/description");
+    String displayName = JSONFailsafe.getString(annotations, "openshift.io/display-name");
+
+    return new Namespace( name, selfLink, creationTimestamp, owner, displayName, description, statusPhase );
   }
 
   public static List<Namespace> extractNamespaces( JSONObject input )
@@ -94,7 +90,8 @@ public class Namespace
       for( int loop = 0; loop < components.length(); loop++ )
       {
         Namespace namespace = Namespace.extractNamespace(components.getJSONObject(loop));
-        working.add(namespace);
+
+        if( namespace != null ) working.add(namespace);
       }
 
       return working;
