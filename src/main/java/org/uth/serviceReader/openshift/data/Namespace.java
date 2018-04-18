@@ -1,8 +1,10 @@
 package org.uth.serviceReader.openshift.data;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.json.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.uth.serviceReader.utils.JSONFailsafe;
 
 public class Namespace
@@ -96,5 +98,23 @@ public class Namespace
 
       return working;
     }
+  }
+
+  /**
+   * Return a generic version of this object.
+   */
+  public Generic toGeneric()
+  {
+    Generic working = new Generic();
+
+    working.addAtomic("name", this._name);
+    working.addAtomic("selfLink", this._selfLink);
+    working.addAtomic("creationTimestamp", this._creationTimestamp);
+    working.addAtomic("owner",this._owner);
+    working.addAtomic("displayName", this._displayName);
+    working.addAtomic("description", this._description);
+    working.addAtomic("status", this._status);
+
+    return working;
   }
 }
