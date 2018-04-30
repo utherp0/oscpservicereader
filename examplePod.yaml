@@ -1,3 +1,6 @@
+
+java -classpath "servicereader-1.0-jar-with-dependencies.jar" org.uth.serviceReader.tests.SecureTest1 https://oscp-console.demolab.local:8443/api/v1/namespaces/uthtest1/pods/nodetest-5-tzxd9?pretty=true (token)
+
 {
   "kind": "Pod",
   "apiVersion": "v1",
