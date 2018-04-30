@@ -1,0 +1,158 @@
+{
+  "kind": "Pod",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "nodetest-5-tzxd9",
+    "generateName": "nodetest-5-",
+    "namespace": "uthtest1",
+    "selfLink": "/api/v1/namespaces/uthtest1/pods/nodetest-5-tzxd9",
+    "uid": "5c16293f-46fc-11e8-afe0-5254002f83b4",
+    "resourceVersion": "393732824",
+    "creationTimestamp": "2018-04-23T13:43:52Z",
+    "labels": {
+      "app": "nodetest",
+      "deployment": "nodetest-5",
+      "deploymentconfig": "nodetest"
+    },
+    "annotations": {
+      "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"ReplicationController\",\"namespace\":\"uthtest1\",\"name\":\"nodetest-5\",\"uid\":\"176e0b5c-46fc-11e8-afe0-5254002f83b4\",\"apiVersion\":\"v1\",\"resourceVersion\":\"393732642\"}}\n",
+      "openshift.io/deployment-config.latest-version": "5",
+      "openshift.io/deployment-config.name": "nodetest",
+      "openshift.io/deployment.name": "nodetest-5",
+      "openshift.io/scc": "restricted"
+    },
+    "ownerReferences": [
+      {
+        "apiVersion": "v1",
+        "kind": "ReplicationController",
+        "name": "nodetest-5",
+        "uid": "176e0b5c-46fc-11e8-afe0-5254002f83b4",
+        "controller": true,
+        "blockOwnerDeletion": true
+      }
+    ]
+  },
+  "spec": {
+    "volumes": [
+      {
+        "name": "volume-plp2x",
+        "persistentVolumeClaim": {
+          "claimName": "soprastorage"
+        }
+      },
+      {
+        "name": "default-token-8ltfc",
+        "secret": {
+          "secretName": "default-token-8ltfc",
+          "defaultMode": 420
+        }
+      }
+    ],
+    "containers": [
+      {
+        "name": "nodetest",
+        "image": "docker-registry.default.svc:5000/uthtest1/nodetest@sha256:3795ec260ecaa4fe4c203ba9bc8e419d4a18b78f554f5aba9ecc904d2fdf8ad0",
+        "ports": [
+          {
+            "containerPort": 8080,
+            "protocol": "TCP"
+          }
+        ],
+        "resources": {},
+        "volumeMounts": [
+          {
+            "name": "volume-plp2x",
+            "mountPath": "/uth"
+          },
+          {
+            "name": "default-token-8ltfc",
+            "readOnly": true,
+            "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+          }
+        ],
+        "terminationMessagePath": "/dev/termination-log",
+        "terminationMessagePolicy": "File",
+        "imagePullPolicy": "Always",
+        "securityContext": {
+          "capabilities": {
+            "drop": [
+              "KILL",
+              "MKNOD",
+              "SETGID",
+              "SETUID"
+            ]
+          },
+          "privileged": false,
+          "seLinuxOptions": {
+            "level": "s0:c12,c9"
+          },
+          "runAsUser": 1000150000
+        }
+      }
+    ],
+    "restartPolicy": "Always",
+    "terminationGracePeriodSeconds": 30,
+    "dnsPolicy": "ClusterFirst",
+    "nodeSelector": {
+      "purpose": "apps"
+    },
+    "serviceAccountName": "default",
+    "serviceAccount": "default",
+    "nodeName": "ocp-app-1.demolab.local",
+    "securityContext": {
+      "seLinuxOptions": {
+        "level": "s0:c12,c9"
+      },
+      "fsGroup": 1000150000
+    },
+    "imagePullSecrets": [
+      {
+        "name": "default-dockercfg-t59vc"
+      }
+    ],
+    "schedulerName": "default-scheduler"
+  },
+  "status": {
+    "phase": "Running",
+    "conditions": [
+      {
+        "type": "Initialized",
+        "status": "True",
+        "lastProbeTime": null,
+        "lastTransitionTime": "2018-04-23T13:43:52Z"
+      },
+      {
+        "type": "Ready",
+        "status": "True",
+        "lastProbeTime": null,
+        "lastTransitionTime": "2018-04-23T13:43:55Z"
+      },
+      {
+        "type": "PodScheduled",
+        "status": "True",
+        "lastProbeTime": null,
+        "lastTransitionTime": "2018-04-23T13:43:52Z"
+      }
+    ],
+    "hostIP": "10.60.0.12",
+    "podIP": "10.130.2.237",
+    "startTime": "2018-04-23T13:43:52Z",
+    "containerStatuses": [
+      {
+        "name": "nodetest",
+        "state": {
+          "running": {
+            "startedAt": "2018-04-23T13:43:55Z"
+          }
+        },
+        "lastState": {},
+        "ready": true,
+        "restartCount": 0,
+        "image": "docker-registry.default.svc:5000/uthtest1/nodetest@sha256:3795ec260ecaa4fe4c203ba9bc8e419d4a18b78f554f5aba9ecc904d2fdf8ad0",
+        "imageID": "docker-pullable://docker-registry.default.svc:5000/uthtest1/nodetest@sha256:3795ec260ecaa4fe4c203ba9bc8e419d4a18b78f554f5aba9ecc904d2fdf8ad0",
+        "containerID": "docker://d6d70d3d0a1e2d2d21b272494da5ee2ed1d260345647e270a3219d29fe0afb26"
+      }
+    ],
+    "qosClass": "BestEffort"
+  }
+}
